@@ -13,6 +13,10 @@ public class FripperController : MonoBehaviour
 
     private int tapBoundary = Screen.width / 2;
 
+    private int leftFingID = -1;
+    private int rightFingID = -1;
+
+
     //Touch touch0;
     //Touch touch1;
 
@@ -34,30 +38,40 @@ public class FripperController : MonoBehaviour
         bool rightTouchDown = false; 
 
         bool leftTouchUp = false; 
-        bool rightTouchUp = false; 
+        bool rightTouchUp = false;
+
 
         foreach (Touch touch in Input.touches)
         {
+            Debug.Log("FID=" + touch.fingerId);
+            Debug.Log("RID=" + rightFingID);
+            Debug.Log("LID=" + leftFingID);
+
             if (touch.phase == TouchPhase.Began)
             {
-                if (touch.position.x < tapBoundary)
+                
+                if (touch.position.x < tapBoundary && leftFingID < 0)
                 {
-                    leftTouchDown = true; 
+                    leftTouchDown = true;
+                    leftFingID = touch.fingerId;
                 }
-                else if(touch.position.x >= tapBoundary)
+                else if(touch.position.x >= tapBoundary && rightFingID < 0)
                 {
-                    rightTouchDown = true; 
+                    rightTouchDown = true;
+                    rightFingID = touch.fingerId;
                 }
             }
             if (touch.phase == TouchPhase.Ended)
             {
-                if (touch.position.x < tapBoundary)
+                if (touch.fingerId == leftFingID)
                 {
-                    leftTouchUp = true; 
+                    leftTouchUp = true;
+                    leftFingID = -1;
                 }
-                else if (touch.position.x >= tapBoundary)
+                else if (touch.fingerId == rightFingID)
                 {
-                    rightTouchUp = true; 
+                    rightTouchUp = true;
+                    rightFingID = -1;
                 }
             }
         }
