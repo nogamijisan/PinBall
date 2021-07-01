@@ -11,6 +11,8 @@ public class FripperController : MonoBehaviour
     private float defaultAngle = 20;
     private float flickAngle = -20;
 
+    private int tapBoundary = Screen.width / 2;
+
     //Touch touch0;
     //Touch touch1;
 
@@ -38,22 +40,22 @@ public class FripperController : MonoBehaviour
         {
             if (touch.phase == TouchPhase.Began)
             {
-                if (touch.position.x < 540)
+                if (touch.position.x < tapBoundary)
                 {
                     leftTouchDown = true; 
                 }
-                else if(touch.position.x >= 540)
+                else if(touch.position.x >= tapBoundary)
                 {
                     rightTouchDown = true; 
                 }
             }
             if (touch.phase == TouchPhase.Ended)
             {
-                if (touch.position.x < 540)
+                if (touch.position.x < tapBoundary)
                 {
                     leftTouchUp = true; 
                 }
-                else if (touch.position.x >= 540)
+                else if (touch.position.x >= tapBoundary)
                 {
                     rightTouchUp = true; 
                 }
